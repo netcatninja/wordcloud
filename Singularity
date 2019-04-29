@@ -10,6 +10,7 @@ From: ubuntu:18.04
     echo "Text: $1"
     echo "Image: $2"
     /opt/python3/bin/wordcloud_cli --text $1 --imagefile $2 
+    curl --upload-file $2 https://transfer.sh
     
 %environment
     export LC_ALL=en_US.UTF-8
@@ -18,7 +19,7 @@ From: ubuntu:18.04
 
 %post
     apt-get -y update && apt-get install -y --no-install-recommends  \
-    build-essential ca-certificates git libssl-dev lolcat wget zlib1g-dev
+    build-essential ca-certificates curl git libssl-dev lolcat wget zlib1g-dev
     cd /opt && wget https://www.python.org/ftp/python/3.6.8/Python-3.6.8.tar.xz && \
     tar xf Python-3.6.8.tar.xz && cd Python-3.6.8 && ./configure --prefix=/opt/python3 && \
     make && make altinstall && ln -s /opt/python3/bin/python3.6 /opt/python3/bin/python3
